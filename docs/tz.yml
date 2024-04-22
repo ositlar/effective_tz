@@ -1,0 +1,89 @@
+openapi: 3.0.3
+info:
+  title: effective_tz
+  version: 1.0.0
+paths:
+  /create:
+    post:
+      produces:
+        - application/json
+      parameters:
+        - name: regNums
+        in: body
+        description: Numbers to be created.
+        required: true
+        schema:
+          type: array
+        items:
+          type: string
+      responses:
+        '200':
+          description: Number(s) created successfully.
+        '400':
+          description: Invalid request payload.
+        '500':
+          description: Internal server error.
+  /delete:
+    post:
+      produces:
+        - application/json
+      parameters:
+        - name: ids
+        in: body
+        description: IDs of numbers to be deleted.
+        required: true
+        schema:
+          type: array
+        items:
+          type: string
+      responses:
+      '200':
+        description: Numbers deleted successfully.
+      '400':
+        description: Invalid request payload.
+      '500':
+        description: Internal server error.
+  /list:
+    get:
+      responses:
+        '200':
+          description: Number(s) retrieved successfully.
+        '400':
+          description: Invalid request parameters.
+        '500':
+          description: Internal server error.
+      produces:
+        - application/json
+        parameters:
+          - name: id
+          in: query
+          description: ID of the number to retrieve.
+          type: string
+          - name: prefix
+            in: query
+            description: Prefix of the numbers to retrieve.
+            type: string
+          - name: region
+          in: query
+          description: Region of the numbers to retrieve.
+            type: string
+
+  /update:
+    post:
+      responses:
+        '200':
+          description: Number updated successfully.
+        '400':
+          description: Invalid request payload.
+        '500':
+          description: Internal server error.
+
+      produces:
+        - application/json
+      parameters:
+          - name: body
+          in: body
+          description: Request body containing ID of the number to update and its new value.
+          required: true
+          schema:
+            "$ref": "#/definitions/UpdateRequest"
